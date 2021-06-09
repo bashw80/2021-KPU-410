@@ -15,17 +15,24 @@
 
 
     <Button
-       android:id="@+id/btnTest"
-       android:layout_width="150dp"
-       android:layout_height="50dp"
-       android:layout_gravity="center"
-       android:text="속도 거리 테스트"/>
+        android:id="@+id/btnTest"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="속도 거리 테스트"/>
 
-   <Button
-       android:id="@+id/btnMap"
-       android:layout_width="150dp"
-       android:layout_height="50dp"
-       android:layout_gravity="center"
-       android:text="스트리트 뷰"/>
+    <Button
+        android:id="@+id/btnMap"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="스트리트 뷰"/>
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:text="로그인" />
 
 </LinearLayout>
