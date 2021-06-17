@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ValidateRequest extends StringRequest {
     //서버 url 설정(php파일 연동)
-    final static  private String URL=" http://1233992128e8.ngrok.io/UserValidate.php";
+    final static  private String URL="https://6d5ddccdbc93.ngrok.io/Jshkwb/UserValidate.php";
     private Map<String, String> map;
 
     public ValidateRequest(String UserEmail, Response.Listener<String> listener){
