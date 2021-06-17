@@ -1,9 +1,12 @@
 package com.kpu410.realbike;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -12,11 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
+    private static final String TAG="RegisterActivity";
 
     private EditText join_email, join_password, join_name, join_pwck;
     private Button join_button, check_button, delete;
@@ -59,30 +64,30 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
+                Response.Listener<String> responseListener = response -> {
+                    try {
+                        Log.d(TAG,response);
 
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
+                        JsonParser jsonParser = new JsonParser();
+                        Object obj = jsonParser.parse(response);
+                        JSONObject jsonResponse = (JSONObject) obj;
+                        boolean success = jsonResponse.getBoolean("success");
 
-                            if (success) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("사용할 수 있는 아이디입니다.").setPositiveButton("확인", null).create();
-                                dialog.show();
-                                join_email.setEnabled(false); //아이디값 고정
-                                validate = true; //검증 완료
-                                check_button.setBackgroundColor(getResources().getColor(R.color.colorGray));
-                            }
-                            else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("이미 존재하는 아이디입니다.").setNegativeButton("확인", null).create();
-                                dialog.show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (success) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                            dialog = builder.setMessage("사용할 수 있는 아이디입니다.").setPositiveButton("확인", null).create();
+                            dialog.show();
+                            join_email.setEnabled(false); //아이디값 고정
+                            validate = true; //검증 완료
+                            check_button.setBackgroundColor(getResources().getColor(R.color.colorGray));
                         }
+                        else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                            dialog = builder.setMessage("이미 존재하는 아이디입니다.").setNegativeButton("확인", null).create();
+                            dialog.show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 };
                 ValidateRequest validateRequest = new ValidateRequest(UserEmail, responseListener);
@@ -125,7 +130,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
-                            JSONObject jsonObject = new JSONObject( response );
+                            JsonParser jsonParser = new JsonParser();
+                            Object obj = jsonParser.parse( response );
+                            JSONObject jsonObject = (JSONObject) obj;
                             boolean success = jsonObject.getBoolean( "success" );
 
                             //회원가입 성공시

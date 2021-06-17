@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,39 +50,39 @@ public class LoginActivity extends AppCompatActivity {
                 String UserEmail = login_email.getText().toString();
                 String UserPwd = login_password.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
+                Response.Listener<String> responseListener = response -> {
+                    try {
+
+                        JsonParser jsonParser = new JsonParser();
+                        Object obj = jsonParser.parse(response);
+                        JSONObject jsonObject = (JSONObject) obj;
 
 
 
-                            boolean success = jsonObject.getBoolean( "success" );
+                        boolean success = jsonObject.getBoolean( "success" );
 
-                            if(success) {//로그인 성공시
+                        if(success) {//로그인 성공시
 
-                                String UserEmail = jsonObject.getString( "UserEmail" );
-                                String UserPwd = jsonObject.getString( "UserPwd" );
-                                String UserName = jsonObject.getString( "UserName" );
+                            String UserEmail1 = jsonObject.getString( "UserEmail" );
+                            String UserPwd1 = jsonObject.getString( "UserPwd" );
+                            String UserName = jsonObject.getString( "UserName" );
 
-                                Toast.makeText( getApplicationContext(), String.format("%s님 환영합니다.", UserName), Toast.LENGTH_SHORT ).show();
-                                Intent intent = new Intent( LoginActivity.this, MainActivity.class );
+                            Toast.makeText( getApplicationContext(), String.format("%s님 환영합니다.", UserName), Toast.LENGTH_SHORT ).show();
+                            Intent intent = new Intent( LoginActivity.this, MainActivity.class );
 
-                                intent.putExtra( "UserEmail", UserEmail );
-                                intent.putExtra( "UserPwd", UserPwd );
-                                intent.putExtra( "UserName", UserName );
+                            intent.putExtra( "UserEmail", UserEmail1);
+                            intent.putExtra( "UserPwd", UserPwd1);
+                            intent.putExtra( "UserName", UserName );
 
-                                startActivity( intent );
+                            startActivity( intent );
 
-                            } else {//로그인 실패시
-                                Toast.makeText( getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT ).show();
-                                return;
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {//로그인 실패시
+                            Toast.makeText( getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT ).show();
+                            return;
                         }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 };
                 LoginRequest loginRequest = new LoginRequest( UserEmail, UserPwd, responseListener );
