@@ -2,6 +2,7 @@ package com.kpu410.realbike;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,44 +53,29 @@ public class LoginActivity extends AppCompatActivity {
 
                 Response.Listener<String> responseListener = response -> {
                     try {
-
-                        JsonParser jsonParser = new JsonParser();
-                        Object obj = jsonParser.parse(response);
-                        JSONObject jsonObject = (JSONObject) obj;
-
-
-
-                        boolean success = jsonObject.getBoolean( "success" );
-
-                        if(success) {//로그인 성공시
-
-                            String UserEmail1 = jsonObject.getString( "UserEmail" );
-                            String UserPwd1 = jsonObject.getString( "UserPwd" );
-                            String UserName = jsonObject.getString( "UserName" );
-
-                            Toast.makeText( getApplicationContext(), String.format("%s님 환영합니다.", UserName), Toast.LENGTH_SHORT ).show();
-                            Intent intent = new Intent( LoginActivity.this, MainActivity.class );
-
-                            intent.putExtra( "UserEmail", UserEmail1);
-                            intent.putExtra( "UserPwd", UserPwd1);
-                            intent.putExtra( "UserName", UserName );
-
-                            startActivity( intent );
-
-                        } else {//로그인 실패시
-                            Toast.makeText( getApplicationContext(), "로그인에 실패하셨습니다.", Toast.LENGTH_SHORT ).show();
+                        Log.i("Response", response.toString());
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean success = jsonObject.getBoolean("success");
+                        if (success) { // 회원등록에 성공한 경우
+                            Toast.makeText(getApplicationContext(),"회원 등록에 성공하였습니다.",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        } else { // 회원등록에 실패한 경우
+                            Toast.makeText(getApplicationContext(),"회원 등록에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                             return;
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 };
+                // 서버로 Volley를 이용해서 요청을 함.
                 LoginRequest loginRequest = new LoginRequest( UserEmail, UserPwd, responseListener );
-                RequestQueue queue = Volley.newRequestQueue( LoginActivity.this );
+                RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add( loginRequest );
 
             }
         });
+
     }
 }

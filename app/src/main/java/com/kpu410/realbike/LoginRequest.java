@@ -10,7 +10,7 @@ import java.util.Map;
 public class LoginRequest extends StringRequest {
 
     //서버 URL 설정(php 파일 연동)
-    final static private String URL = " https://6d5ddccdbc93.ngrok.io/Jshkwb/Login.php";
+    final static private String URL = "https://d6d6901cf4d6.ngrok.io/Jshkwb/Login.php";
     private Map<String, String> map;
 
     public LoginRequest(String UserEmail, String UserPwd, Response.Listener<String> listener) {

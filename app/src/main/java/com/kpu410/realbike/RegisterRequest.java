@@ -9,7 +9,7 @@ import java.util.Map;
 public class RegisterRequest extends StringRequest {
 
     //서버 URL 설정(php 파일 연동)
-    final static private String URL = "https://6d5ddccdbc93.ngrok.io/Jshkwb/Register.php";
+    final static private String URL = "http://d6d6901cf4d6.ngrok.io/Jshkwb/Register.php";
     private Map<String, String> map;
     //private Map<String, String>parameters;
 

@@ -66,12 +66,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 Response.Listener<String> responseListener = response -> {
                     try {
-                        Log.d(TAG,response);
-
-                        JsonParser jsonParser = new JsonParser();
-                        Object obj = jsonParser.parse(response);
-                        JSONObject jsonResponse = (JSONObject) obj;
-                        boolean success = jsonResponse.getBoolean("success");
+                        Log.i("Response", response.toString());
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean success = jsonObject.getBoolean("success");
 
                         if (success) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -125,41 +122,37 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
+                Response.Listener<String> responseListener = response -> {
 
-                        try {
-                            JsonParser jsonParser = new JsonParser();
-                            Object obj = jsonParser.parse( response );
-                            JSONObject jsonObject = (JSONObject) obj;
-                            boolean success = jsonObject.getBoolean( "success" );
+                    try {
+                        Log.i("Response", response.toString());
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean success = jsonObject.getBoolean( "success" );
 
-                            //회원가입 성공시
-                            if(UserPwd.equals(PassCk)) {
-                                if (success) {
+                        //회원가입 성공시
+                        if(UserPwd.equals(PassCk)) {
+                            if (success) {
 
-                                    Toast.makeText(getApplicationContext(), String.format("%s님 가입을 환영합니다.", UserName), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                    startActivity(intent);
+                                Toast.makeText(getApplicationContext(), String.format("%s님 가입을 환영합니다.", UserName), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                startActivity(intent);
 
-                                    //회원가입 실패시
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
+                                //회원가입 실패시
                             } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                dialog = builder.setMessage("비밀번호가 동일하지 않습니다.").setNegativeButton("확인", null).create();
-                                dialog.show();
+                                Toast.makeText(getApplicationContext(), "회원가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                            dialog = builder.setMessage("비밀번호가 동일하지 않습니다.").setNegativeButton("확인", null).create();
+                            dialog.show();
+                            return;
                         }
 
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
                 };
 
 
