@@ -7,6 +7,9 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        configurations.all {
+            resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+        }
         applicationId "com.kpu410.realbike"
         minSdkVersion 16
         targetSdkVersion 30
