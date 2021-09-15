@@ -17,18 +17,29 @@ import app.akexorcist.bluetotohspp.library.DeviceList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BluetoothSPP bt;
+    private String userID;
+    private String userPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent loginIntent = getIntent();
+        userID = loginIntent.getStringExtra("userID");
+        userPass = loginIntent.getStringExtra("userPass");
+
+
+
+
+
         Button btnMap = findViewById(R.id.btnMap);
         btnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("userPass", userPass);
                 startActivity(intent);
             }
         });
@@ -38,15 +49,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("userPass", userPass);
                 startActivity(intent);
-            }
-        });
-        Button btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent( getApplicationContext(), LoginActivity.class );
-                startActivity( intent );
             }
         });
     }

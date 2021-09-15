@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".ResultActivity">
+    tools:context=".InfoActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textSize="40sp"
         android:layout_gravity="center"
-        android:text="주행 결과"/>
+        android:text="유저 정보(로고 예정)"/>
 
     <TextView
+        android:id="@+id/infoID"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:textSize="20sp"
-        android:layout_gravity="center"
-        android:text=""/>
-
-    <TextView
-        android:id="@+id/resultLength"
-        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="30sp"
-        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:text="ID"/>
+
+    <TextView
+        android:id="@+id/infoName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:text="이름"/>
+
+    <TextView
+        android:id="@+id/infoEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="30sp"
+        android:layout_gravity="center"
+        android:text="이메일"/>
+
+    <TextView
+        android:id="@+id/infoDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="30sp"
+        android:layout_gravity="center"
         android:text="총 주행 거리"/>
 
     <TextView
-        android:id="@+id/resultTime"
-        android:layout_width="match_parent"
+        android:id="@+id/infoTime"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textSize="30sp"
-        android:gravity="center_horizontal"
-        android:text="주행 시간"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:textSize="20sp"
         android:layout_gravity="center"
-        android:text=""/>
+        android:text="총 주행 시간"/>
 
-    <Button
-        android:id="@+id/btnMain"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="메인으로 이동"/>
 
-    <Button
-        android:id="@+id/btnresult"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:text="결과 저장" />
+
 </LinearLayout>
